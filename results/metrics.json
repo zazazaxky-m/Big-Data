@@ -1,0 +1,303 @@
+{
+  "spark_version": "4.3.0",
+  "n_raw": 55423856,
+  "n_clean": 53242583,
+  "n_train": 42592531,
+  "n_test": 10650052,
+  "n_model_train_sample": 1998131,
+  "n_tuning": 300000,
+  "n_final_train": 8000000,
+  "cleaning_funnel": {
+    "R1 null": 376,
+    "R2 fare 2.5-250": 5453,
+    "R3 penumpang 1-6": 195108,
+    "R4 koordinat di NYC": 1174675,
+    "R5 jarak 0.05-100 km": 805629,
+    "R6 duplikat": 32,
+    "TOTAL dibuang": 2181273,
+    "SISA (data bersih)": 53242583
+  },
+  "anomalies": {
+    "ada nilai null": 376,
+    "fare_amount <= 0": 3834,
+    "0 < fare_amount < 2,5 (di bawah tarif awal)": 913,
+    "fare_amount > 250": 706,
+    "passenger_count = 0": 195416,
+    "passenger_count > 6": 116,
+    "koordinat bernilai 0": 1104490,
+    "pickup di luar area NYC": 1118248,
+    "dropoff di luar area NYC": 1115983,
+    "pickup == dropoff (jarak 0)": 1581276
+  },
+  "fare_quantiles": {
+    "p01": 3.3,
+    "p05": 4.1,
+    "p25": 6.0,
+    "p50": 8.5,
+    "p75": 12.5,
+    "p95": 30.1,
+    "p99": 53.0
+  },
+  "model_results": [
+    {
+      "model": "Baseline (rata-rata)",
+      "test_RMSE": 9.411123675787332,
+      "test_MAE": 5.916387236881743,
+      "test_R2": -3.4518508273961857e-07,
+      "test_MSE": 88.56924884096487,
+      "train_RMSE": NaN,
+      "waktu_latih_s": 0.0
+    },
+    {
+      "model": "Linear Regression",
+      "test_RMSE": 3.8135521406152653,
+      "test_MAE": 1.955306926154517,
+      "test_R2": 0.835798709601864,
+      "test_MSE": 14.543179929191272,
+      "train_RMSE": 3.825994476671212,
+      "waktu_latih_s": 13.197170773000835
+    },
+    {
+      "model": "Decision Tree",
+      "test_RMSE": 3.419461229083846,
+      "test_MAE": 1.7586021244278796,
+      "test_R2": 0.867982180199429,
+      "test_MSE": 11.692715097207607,
+      "train_RMSE": 3.275860369017017,
+      "waktu_latih_s": 10.248986417000197
+    },
+    {
+      "model": "Random Forest",
+      "test_RMSE": 3.3081227384060163,
+      "test_MAE": 1.7315758666790382,
+      "test_R2": 0.8764392836885956,
+      "test_MSE": 10.94367605235892,
+      "train_RMSE": 3.2257442409797767,
+      "waktu_latih_s": 102.9311379640003
+    },
+    {
+      "model": "GBT",
+      "test_RMSE": 3.170116032783511,
+      "test_MAE": 1.5727915640225616,
+      "test_R2": 0.8865335400061872,
+      "test_MSE": 10.049635661311068,
+      "train_RMSE": 3.069686739689151,
+      "waktu_latih_s": 126.50317281400021
+    }
+  ],
+  "best_model_before_tuning": "GBT",
+  "cv_results": [
+    {
+      "maxDepth": 6,
+      "maxIter": 100,
+      "stepSize": 0.1,
+      "cv_RMSE": 3.2231965339861506,
+      "cv_RMSE_std": 0.12968738600382007
+    },
+    {
+      "maxDepth": 6,
+      "maxIter": 50,
+      "stepSize": 0.1,
+      "cv_RMSE": 3.2702030585154738,
+      "cv_RMSE_std": 0.12925589408728683
+    },
+    {
+      "maxDepth": 6,
+      "maxIter": 50,
+      "stepSize": 0.2,
+      "cv_RMSE": 3.2914154282189814,
+      "cv_RMSE_std": 0.12801566535687345
+    },
+    {
+      "maxDepth": 6,
+      "maxIter": 100,
+      "stepSize": 0.2,
+      "cv_RMSE": 3.299294180719715,
+      "cv_RMSE_std": 0.12322599027102898
+    },
+    {
+      "maxDepth": 9,
+      "maxIter": 50,
+      "stepSize": 0.1,
+      "cv_RMSE": 3.498606059680084,
+      "cv_RMSE_std": 0.10051643674171712
+    },
+    {
+      "maxDepth": 9,
+      "maxIter": 100,
+      "stepSize": 0.1,
+      "cv_RMSE": 3.5017039890882273,
+      "cv_RMSE_std": 0.09898453550335269
+    },
+    {
+      "maxDepth": 9,
+      "maxIter": 50,
+      "stepSize": 0.2,
+      "cv_RMSE": 3.6679314500362867,
+      "cv_RMSE_std": 0.0637892924840482
+    },
+    {
+      "maxDepth": 9,
+      "maxIter": 100,
+      "stepSize": 0.2,
+      "cv_RMSE": 3.7275596998354916,
+      "cv_RMSE_std": 0.06338160947366045
+    }
+  ],
+  "best_params": {
+    "maxDepth": 6,
+    "maxIter": 100,
+    "stepSize": 0.1
+  },
+  "tuning_comparison": [
+    {
+      "model": "GBT awal (maxDepth=6, maxIter=60, stepSize=0.1), 2.0 jt baris",
+      "RMSE": 3.170116032783511,
+      "MAE": 1.5727915640225616,
+      "R2": 0.8865335400061872,
+      "perbaikan_RMSE_vs_awal": 0.0
+    },
+    {
+      "model": "GBT tuned, 2.0 jt baris",
+      "RMSE": 3.1103056201782353,
+      "MAE": 1.5248786699483958,
+      "R2": 0.8907746817678918,
+      "perbaikan_RMSE_vs_awal": 0.018866947451371185
+    },
+    {
+      "model": "GBT tuned, ~8.0 jt baris (model final)",
+      "RMSE": 3.087985881719352,
+      "MAE": 1.5164020966956229,
+      "R2": 0.8923366719030577,
+      "perbaikan_RMSE_vs_awal": 0.025907616697564584
+    }
+  ],
+  "final_test_metrics": {
+    "RMSE": 3.087985881719352,
+    "MAE": 1.5164020966956229,
+    "R2": 0.8923366719030577,
+    "MSE": 9.535656805698043
+  },
+  "error_by_distance": [
+    {
+      "bucket": "0-2 km",
+      "n": 4856813,
+      "RMSE": 2.6017132178119176,
+      "MAE": 1.1608024498062826,
+      "avg_fare": 6.3590928166268785
+    },
+    {
+      "bucket": "2-5 km",
+      "n": 3898189,
+      "RMSE": 2.606315442552826,
+      "MAE": 1.478520406265148,
+      "avg_fare": 10.615155722310956
+    },
+    {
+      "bucket": "5-10 km",
+      "n": 1351923,
+      "RMSE": 3.836900895300365,
+      "MAE": 2.361821920563287,
+      "avg_fare": 19.48035490187116
+    },
+    {
+      "bucket": "10-20 km",
+      "n": 413651,
+      "RMSE": 6.498054470618229,
+      "MAE": 4.069800692338196,
+      "avg_fare": 35.96165482496486
+    },
+    {
+      "bucket": ">= 20 km",
+      "n": 129476,
+      "RMSE": 8.921250371156129,
+      "MAE": 3.649178433631756,
+      "avg_fare": 52.86994184250831
+    }
+  ],
+  "airport_trips": [
+    {
+      "trip_type": "Non-bandara",
+      "trips": 51080266,
+      "avg_fare": 9.804885749419286,
+      "median_fare": 8.1,
+      "avg_km": 2.769104780597906,
+      "persen": 94.508650456803
+    },
+    {
+      "trip_type": "LGA",
+      "trips": 1760890,
+      "avg_fare": 30.6157966312576,
+      "median_fare": 30.67,
+      "avg_km": 9.578740191780797,
+      "persen": 3.2579966890321175
+    },
+    {
+      "trip_type": "JFK",
+      "trips": 1136171,
+      "avg_fare": 45.91479243002244,
+      "median_fare": 49.8,
+      "avg_km": 17.912095188403026,
+      "persen": 2.102142300867351
+    },
+    {
+      "trip_type": "EWR",
+      "trips": 70917,
+      "avg_fare": 70.2560171750074,
+      "median_fare": 70.69,
+      "avg_km": 16.428912861595098,
+      "persen": 0.13121055329753173
+    }
+  ],
+  "feature_importance_final": {
+    "distance_km": 0.6024578120222297,
+    "bearing": 0.04650578957910939,
+    "dropoff_latitude": 0.040992988621014276,
+    "dropoff_dist_jfk": 0.030067329680180162,
+    "after_fare_hike": 0.021373572678387954,
+    "hour": 0.021031042060834677,
+    "dropoff_dist_center": 0.02096347143153578,
+    "year_frac": 0.020786413364286986,
+    "manhattan_km": 0.0184791778162074,
+    "pickup_dist_jfk": 0.018360057000786495,
+    "dropoff_longitude": 0.017454765485207448,
+    "airport_trip": 0.017396040905773628,
+    "dropoff_dist_lga": 0.01703244713794128,
+    "dropoff_dist_ewr": 0.016857896426773322,
+    "delta_lon": 0.014372354500612503,
+    "delta_lat": 0.011460027884068465,
+    "pickup_latitude": 0.00970345031125323,
+    "pickup_dist_center": 0.008846318838721261,
+    "pickup_dist_lga": 0.00875881294125091,
+    "is_night": 0.007292709019652492,
+    "pickup_dist_ewr": 0.007229847036119532,
+    "month": 0.006260743165612607,
+    "pickup_longitude": 0.005949843416760718,
+    "is_weekend": 0.004414563787558732,
+    "day_of_week": 0.004244316606975349,
+    "passenger_count": 0.00096563055256874,
+    "year": 0.0006002377444881692,
+    "is_peak": 0.00014233998408865088
+  },
+  "timings_seconds": {
+    "load_raw + count": 6.3,
+    "tulis prepared.parquet": 51.7,
+    "summary statistik": 50.9,
+    "audit anomali": 4.1,
+    "distribusi fare": 13.6,
+    "agregasi temporal": 47.2,
+    "agregasi jarak": 22.3,
+    "peta kepadatan": 10.3,
+    "agregasi bandara": 18.0,
+    "funnel pembersihan": 4.5,
+    "filter + dropDuplicates + tulis clean.parquet": 49.4,
+    "matriks korelasi": 62.1,
+    "split + count": 0.3,
+    "evaluasi test set": 179.4,
+    "analisis galat": 54.8,
+    "cross-validation GBT": 1397.0,
+    "latih GBT final": 645.4,
+    "evaluasi GBT final": 34.0,
+    "latih GBT tuned (sampel perbandingan)": 174.6
+  }
+}

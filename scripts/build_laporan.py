@@ -46,22 +46,24 @@ def shade(cell, fill="E8EEF7"):
 
 def style_docx(path):
     doc = Document(path)
+    styles = {s.name: s for s in doc.styles}
     for name in ("Normal", "Body Text", "First Paragraph", "Compact"):
-        if name in [s.name for s in doc.styles]:
-            st = doc.styles[name]
+        if name in styles:
+            st = styles[name]
             st.font.name = "Calibri"
             st.font.size = Pt(11)
-            st.element.rPr.rFonts.set(qn("w:eastAsia"), "Calibri")
+            if st.element.rPr is not None and st.element.rPr.rFonts is not None:
+                st.element.rPr.rFonts.set(qn("w:eastAsia"), "Calibri")
     for lvl, size in ((1, 16), (2, 13), (3, 11.5)):
         name = f"Heading {lvl}"
-        if name in [s.name for s in doc.styles]:
-            st = doc.styles[name]
+        if name in styles:
+            st = styles[name]
             st.font.name = "Calibri"
             st.font.size = Pt(size)
             st.font.bold = True
             st.font.color.rgb = ACCENT if lvl == 1 else INK
-    if "Title" in [s.name for s in doc.styles]:
-        st = doc.styles["Title"]
+    if "Title" in styles:
+        st = styles["Title"]
         st.font.name = "Calibri"
         st.font.size = Pt(20)
         st.font.color.rgb = INK
